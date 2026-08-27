@@ -1,0 +1,69 @@
+# =========================================================
+# KODE PROGRAM 1: Program Input Data Siswa
+# =========================================================
+
+# List untuk menampung semua data siswa
+daftar_siswa = []
+
+print("=== PROGRAM INPUT DATA SISWA ===")
+
+while True:
+    # Mengambil input data dari pengguna
+    nama = input("\nMasukkan Nama Siswa : ")
+    nisn = input("Masukkan NISN       : ")
+    kelas = input("Masukkan Kelas      : ")
+    jurusan = input("Masukkan Jurusan    : ")
+
+    # Menyimpan data siswa ke dalam dictionary
+    siswa = {
+        "Nama": nama,
+        "NISN": nisn,
+        "Kelas": kelas,
+        "Jurusan": jurusan
+    }
+
+    # Memasukkan dictionary siswa ke dalam list daftar_siswa
+    daftar_siswa.append(siswa)
+
+    # Menanyakan apakah ingin menambah data lagi
+    tambah_lagi = input("\nTambah data siswa lagi? (y/n): ").lower()
+    if tambah_lagi != 'y':
+        break
+
+# Menampilkan hasil input data siswa
+print("\n" + "="*55)
+print(f"{'NO':<4} | {'NAMA':<15} | {'NISN':<10} | {'KELAS':<6} | {'JURUSAN'}")
+print("="*55)
+
+# Melakukan perulangan untuk membaca list
+for i, siswa in enumerate(daftar_siswa, start=1):
+    print(f"{i:<4} | {siswa['Nama']:<15} | {siswa['NISN']:<10} | {siswa['Kelas']:<6} | {siswa['Jurusan']}")
+
+print("="*55)
+print(f"Total data siswa berhasil disimpan: {len(daftar_siswa)} siswa.\n")
+
+
+# =========================================================
+# KODE PROGRAM 2: Turtle Graphic Art
+# =========================================================
+
+from turtle import *
+import colorsys
+
+speed(0)
+bgcolor("black")
+h = 0
+
+for i in range(16):
+    for j in range(18):
+        c = colorsys.hsv_to_rgb(h, 1, 1)
+        color(c)
+        h += 0.005
+        rt(90)
+        circle(150 - j * 6, 90)
+        lt(90)
+        circle(150 - j * 6, 90)
+        rt(180)
+        circle(40, 24)
+
+done()
