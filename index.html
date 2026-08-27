@@ -1,61 +1,147 @@
-# Program Input Data Siswa
-daftar_siswa = []
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Python & Graphics</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        h2 { color: #4CAF50; }
+        .form-group { margin-bottom: 10px; }
+        label { display: inline-block; width: 150px; }
+        input { padding: 8px; border-radius: 4px; border: 1px solid #444; background: #222; color: #fff; }
+        button { padding: 8px 15px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+        button:hover { background-color: #45a049; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #1e1e1e; }
+        th, td { border: 1px solid #444; padding: 10px; text-align: left; }
+        th { background-color: #333; }
+        canvas { background-color: black; display: block; margin: 30px auto; border-radius: 8px; }
+    </style>
+</head>
+<body>
 
-print("=== PROGRAM INPUT DATA SISWA ===")
+    <h2>=== PROGRAM INPUT DATA SISWA ===</h2>
+    
+    <div class="form-group"><label>Nama Siswa:</label><input type="text" id="nama"></div>
+    <div class="form-group"><label>NISN:</label><input type="text" id="nisn"></div>
+    <div class="form-group"><label>Kelas:</label><input type="text" id="kelas"></div>
+    <div class="form-group"><label>Jurusan:</label><input type="text" id="jurusan"></div>
+    
+    <button onclick="tambahSiswa()">Tambah Data Siswa</button>
 
-while True:
-    # Mengambil input data dari pengguna
-    nama = input("\nMasukkan Nama Siswa : ")
-    nisn = input("Masukkan NISN       : ")
-    kelas = input("Masukkan Kelas      : ")
-    jurusan = input("Masukkan Jurusan    : ")
+    <h3>Daftar Data Siswa</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>NO</th>
+                <th>NAMA</th>
+                <th>NISN</th>
+                <th>KELAS</th>
+                <th>JURUSAN</th>
+            </tr>
+        </thead>
+        <tbody id="tabel-siswa"></tbody>
+    </table>
+    <p id="total-siswa">Total data siswa berhasil disimpan: 0 siswa.</p>
 
-    # Menyimpan data siswa ke dalam dictionary
-    siswa = {
-        "Nama": nama,
-        "NISN": nisn,
-        "Kelas": kelas,
-        "Jurusan": jurusan
-    }
+    <hr style="margin-top: 40px; border-color: #444;">
 
-    # Memasukkan dictionary siswa ke dalam list daftar_siswa
-    daftar_siswa.append(siswa)
+    <h2 style="text-align: center;">Visual Graphic Art (Turtle Simulation)</h2>
+    <canvas id="turtleCanvas" width="500" height="500"></canvas>
 
-    # Menanyakan apakah ingin menambah data lagi
-    tambah_lagi = input("\nTambah data siswa lagi? (y/n): ").lower()
-    if tambah_lagi != 'y':
-        break
+    <script>
+        // Logika Program 1: Data Siswa
+        let daftar_siswa = [];
 
-# Menampilkan hasil input data siswa
-print("\n" + "="*55)
-print(f"{'NO':<4} | {'NAMA':<15} | {'NISN':<10} | {'KELAS':<6} | {'JURUSAN'}")
-print("="*55)
+        function tambahSiswa() {
+            let nama = document.getElementById('nama').value;
+            let nisn = document.getElementById('nisn').value;
+            let kelas = document.getElementById('kelas').value;
+            let jurusan = document.getElementById('jurusan').value;
 
-# Melakukan perulangan untuk membaca list
-for i, siswa in enumerate(daftar_siswa, start=1):
-    print(f"{i:<4} | {siswa['Nama']:<15} | {siswa['NISN']:<10} | {siswa['Kelas']:<6} | {siswa['Jurusan']}")
+            if(!nama || !nisn) {
+                alert("Mohon isi Nama dan NISN!");
+                return;
+            }
 
-print("="*55)
-print(f"Total data siswa berhasil disimpan: {len(daftar_siswa)} siswa.")
+            daftar_siswa.push({ Nama: nama, NISN: nisn, Kelas: kelas, Jurusan: jurusan });
 
-# Turtle Graphic Art
-from turtle import *
-import colorsys
+            // Reset Form Input
+            document.getElementById('nama').value = '';
+            document.getElementById('nisn').value = '';
+            document.getElementById('kelas').value = '';
+            document.getElementById('jurusan').value = '';
 
-speed(0)
-bgcolor("black")
-h = 0
+            renderTabel();
+        }
 
-for i in range(16):
-    for j in range(18):
-        c = colorsys.hsv_to_rgb(h, 1, 1)
-        color(c)
-        h += 0.005
-        rt(90)
-        circle(150 - j * 6, 90)
-        lt(90)
-        circle(150 - j * 6, 90)
-        rt(180)
-        circle(40, 24)
+        function renderTabel() {
+            let tbody = document.getElementById('tabel-siswa');
+            tbody.innerHTML = '';
 
-done()
+            daftar_siswa.forEach((siswa, index) => {
+                let row = `<tr>
+                    <td>${index + 1}</td>
+                    <td>${siswa.Nama}</td>
+                    <td>${siswa.NISN}</td>
+                    <td>${siswa.Kelas}</td>
+                    <td>${siswa.Jurusan}</td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+
+            document.getElementById('total-siswa').innerText = `Total data siswa berhasil disimpan: ${daftar_siswa.length} siswa.`;
+        }
+
+        // Logika Program 2: Grafik Lingkaran Warna-warni (Simulasi Turtle di Canvas)
+        const canvas = document.getElementById('turtleCanvas');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+
+        function hsvToRgb(h, s, v) {
+            let r, g, b;
+            let i = Math.floor(h * 6);
+            let f = h * 6 - i;
+            let p = v * (1 - s);
+            let q = v * (1 - f * s);
+            let t = v * (1 - (1 - f) * s);
+            switch (i % 6) {
+                case 0: r = v, g = t, b = p; break;
+                case 1: r = q, g = v, b = p; break;
+                case 2: r = p, g = v, b = t; break;
+                case 3: r = p, g = q, b = v; break;
+                case 4: r = t, g = p, b = v; break;
+                case 5: r = v, g = p, b = q; break;
+            }
+            return `rgb(${Math.floor(r * 255)}, ${Math.floor(g * 255)}, ${Math.floor(b * 255)})`;
+        }
+
+        function drawGraphic() {
+            let h = 0;
+            ctx.translate(width / 2, height / 2);
+
+            for (let i = 0; i < 16; i++) {
+                for (let j = 0; j < 18; j++) {
+                    ctx.strokeStyle = hsvToRgb(h % 1, 1, 1);
+                    ctx.beginPath();
+                    let radius = Math.max(10, 150 - j * 6);
+                    ctx.arc(0, 0, radius, 0, Math.PI * 0.5);
+                    ctx.stroke();
+
+                    h += 0.005;
+                    ctx.rotate((90 * Math.PI) / 180);
+                }
+            }
+        }
+        drawGraphic();
+    </script>
+</body>
+                                                          </html>
