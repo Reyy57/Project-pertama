@@ -1,8 +1,4 @@
-# =========================================================
-# KODE PROGRAM 1: Program Input Data Siswa
-# =========================================================
-
-# List untuk menampung semua data siswa
+# Program Input Data Siswa
 daftar_siswa = []
 
 print("=== PROGRAM INPUT DATA SISWA ===")
@@ -40,13 +36,9 @@ for i, siswa in enumerate(daftar_siswa, start=1):
     print(f"{i:<4} | {siswa['Nama']:<15} | {siswa['NISN']:<10} | {siswa['Kelas']:<6} | {siswa['Jurusan']}")
 
 print("="*55)
-print(f"Total data siswa berhasil disimpan: {len(daftar_siswa)} siswa.\n")
+print(f"Total data siswa berhasil disimpan: {len(daftar_siswa)} siswa.")
 
-
-# =========================================================
-# KODE PROGRAM 2: Turtle Graphic Art
-# =========================================================
-
+# Turtle Graphic Art
 from turtle import *
 import colorsys
 
